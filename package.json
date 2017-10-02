@@ -1,6 +1,6 @@
 {
   "name": "dep-reloader",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "index.js",
   "author": "Michael Kuryshev <me@mk9.name>",
   "license": "MIT",
