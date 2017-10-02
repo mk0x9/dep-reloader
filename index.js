@@ -19,7 +19,6 @@ function depReloader() {
     const watcher = chokidar.watch(files);
 
     watcher.on('change', filename => {
-        debugger;
         watcher.close();
 
         const pm = filename2pm[filename];
