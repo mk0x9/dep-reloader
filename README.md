@@ -12,7 +12,7 @@ yarn add dep-reloader
 For `create-react-app` just drop
 
 ```javascript
-require('dep-reloader');
+require('dep-reloader')();
 ```
 
 inside of `scripts/start.js`.
