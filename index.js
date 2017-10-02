@@ -12,11 +12,11 @@ chokidar.watch('yarn.lock').on('change', () => {
     const proc = childProcess.spawn('yarn', ['--verbose', '--non-interactive']);
 
     proc.stdout.on('data', data => {
-        console.log(data);
+        process.stdout.write(data);
     });
 
     proc.stderr.on('data', data => {
-        console.error(data);
+        process.stderr.write(data);
     });
 
     proc.on('close', code => {
