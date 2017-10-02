@@ -5,7 +5,7 @@
   "author": "Michael Kuryshev <me@mk9.name>",
   "license": "MIT",
   "dependencies": {
-    "kexec": "~3",
-    "chokidar": "~1"
+    "chokidar": "^1.7.0",
+    "kexec": "^3.0.0"
   }
 }

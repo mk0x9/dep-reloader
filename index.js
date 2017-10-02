@@ -4,12 +4,30 @@ const chokidar = require('chokidar');
 const kexec = require('kexec');
 const childProcess = require('child_process');
 
-chokidar.watch('yarn.lock').on('change', () => {
-    console.log('yarn.lock has been updated!');
-    console.log('reinstalling dependencies');
+const ERR_TIMEOUT = 2000;
+const files = ['yarn.lock', 'npm-shrinkwrap.json'];
+const filename2pm = {
+    'yarn.lock': 'yarn',
+    'npm-shrinkwrap.json': 'npm'
+};
+const pm2installCmd = {
+    'yarn': ['yarn'],
+    'npm': ['npm', ['install']]
+};
+
+const watcher = chokidar.watch(files);
+
+watcher.on('change', filename => {
+    debugger;
+    watcher.close();
+
+    const pm = filename2pm[filename];
+    const pmInstallCmd = pm2installCmd[pm];
+
+    console.log(`${filename} has been updated! Reinstalling dependencies...`);
     console.log();
 
-    const proc = childProcess.spawn('yarn', ['--verbose', '--non-interactive']);
+    const proc = childProcess.spawn.apply(childProcess, pmInstallCmd);
 
     proc.stdout.on('data', data => {
         process.stdout.write(data);
@@ -20,8 +38,15 @@ chokidar.watch('yarn.lock').on('change', () => {
     });
 
     proc.on('close', code => {
-        console.log(`yarn process exited with code ${code}`);
-
-        kexec('yarn', ['start']);
+        if (code === 0) {
+            kexec(pm, ['start']);
+        } else {
+            setInterval(
+                () => {
+                    console.error(`DEP-RELOADER: ${pm} failed update and exited with code ${code}`);
+                },
+                ERR_TIMEOUT
+            );
+        }
     });
 });
