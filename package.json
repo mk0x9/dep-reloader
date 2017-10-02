@@ -1,0 +1,11 @@
+{
+  "name": "dep-reloader",
+  "version": "0.0.0",
+  "main": "index.js",
+  "author": "Michael Kuryshev <me@mk9.name>",
+  "license": "MIT",
+  "dependencies": {
+    "kexec": "~3",
+    "chokidar": "~1"
+  }
+}
